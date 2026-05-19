@@ -904,7 +904,8 @@
           flex-direction:column;
           gap:12px;">
 
-          <button class="book-btn">
+          <button class="book-btn"
+          onclick="customerLogin()">
             Login
           </button>
 
@@ -931,7 +932,8 @@
           flex-direction:column;
           gap:12px;">
 
-          <button class="book-btn">
+          <button class="book-btn"
+          onclick="ownerLogin()">
             Login
           </button>
 
@@ -1012,7 +1014,7 @@ function verifyOTP() {
     alert('Invalid OTP ❌');
   }
 }
-  
+
 const vehicles = [
   {
     icon:'🚚',
@@ -1371,6 +1373,41 @@ function closeOwnerRegister() {
     .getElementById('owner-modal')
     .classList.remove('open');
 }
+
+// CUSTOMER LOGIN
+function customerLogin() {
+
+  window.location.href =
+    "customer-dashboard.html";
+}
+
+// OWNER LOGIN
+function ownerLogin() {
+
+  window.location.href =
+    "owner-dashboard.html";
+}
+
+function closeOwnerRegister() {
+  document
+    .getElementById('owner-modal')
+    .classList.remove('open');
+}
+
+// CUSTOMER LOGIN
+function customerLogin() {
+
+  window.location.href =
+    "customer-dashboard.html";
+}
+
+// OWNER LOGIN
+function ownerLogin() {
+
+  window.location.href =
+    "owner-dashboard.html";
+}
+
 </script>
 <datalist id="city-list">
   <option value="Chennai">

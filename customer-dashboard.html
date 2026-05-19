@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TruckBro - Customer Dashboard</title>
+
+<style>
+body{
+  background:#0d0d0d;
+  color:white;
+  font-family:Arial,sans-serif;
+  margin:0;
+}
+
+header{
+  background:#141414;
+  padding:20px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:bold;
+}
+
+.logo span{
+  color:orange;
+}
+
+.container{
+  padding:40px;
+}
+
+.search-box{
+  background:#141414;
+  padding:25px;
+  border-radius:12px;
+  margin-bottom:30px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  background:#222;
+  border:none;
+  color:white;
+  margin-top:10px;
+  border-radius:8px;
+}
+
+button{
+  background:orange;
+  border:none;
+  padding:14px 22px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-top:20px;
+}
+
+.truck-card{
+  background:#181818;
+  padding:20px;
+  border-radius:12px;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    TRUCK<span>BRO</span>
+  </div>
+
+  <button onclick="logout()">
+    Logout
+  </button>
+</header>
+
+<div class="container">
+
+  <h1>Find Available Trucks</h1>
+
+  <div class="search-box">
+
+    <label>From City</label>
+    <input type="text"
+    id="city"
+    placeholder="Enter city">
+
+    <button onclick="searchTruck()">
+      Search Trucks
+    </button>
+
+  </div>
+
+  <div id="truck-list"></div>
+
+</div>
+
+<script>
+
+const trucks = [
+  {
+    vehicle:"EICHER 14FT",
+    city:"chennai",
+    owner:"Murugan Transport",
+    rating:"4.8"
+  },
+
+  {
+    vehicle:"ACE / DOST",
+    city:"coimbatore",
+    owner:"Balaji Transport",
+    rating:"4.6"
+  }
+];
+
+function searchTruck(){
+
+  const city =
+    document.getElementById('city')
+    .value.toLowerCase();
+
+  const filtered =
+    trucks.filter(t =>
+      t.city === city
+    );
+
+  const list =
+    document.getElementById(
+      'truck-list'
+    );
+
+  if(filtered.length === 0){
+    list.innerHTML =
+      "<h2>No trucks available</h2>";
+    return;
+  }
+
+  list.innerHTML =
+    filtered.map(t => `
+      <div class="truck-card">
+
+        <h2>${t.vehicle}</h2>
+
+        <p>Owner:
+        ${t.owner}</p>
+
+        <p>⭐ ${t.rating}</p>
+
+        <button>
+          Book Truck
+        </button>
+
+      </div>
+    `).join('');
+}
+
+function logout(){
+  window.location.href =
+  "index.html";
+}
+</script>
+
+</body>
+</html>

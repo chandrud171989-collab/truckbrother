@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0">
+
+<title>
+TruckBro Owner Dashboard
+</title>
+
+<style>
+body{
+  background:#0d0d0d;
+  color:white;
+  font-family:Arial;
+  margin:0;
+}
+
+header{
+  background:#141414;
+  padding:20px 40px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:bold;
+}
+
+.logo span{
+  color:orange;
+}
+
+.container{
+  padding:40px;
+}
+
+.card{
+  background:#181818;
+  padding:20px;
+  border-radius:12px;
+  margin-top:20px;
+}
+
+input, select{
+  width:100%;
+  padding:14px;
+  background:#222;
+  border:none;
+  color:white;
+  border-radius:8px;
+  margin-top:10px;
+}
+
+button{
+  background:orange;
+  border:none;
+  padding:12px 20px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    TRUCK<span>BRO</span>
+  </div>
+
+  <button onclick="logout()">
+    Logout
+  </button>
+</header>
+
+<div class="container">
+
+<h1>My Truck Dashboard</h1>
+
+<div class="card">
+
+<h2>EICHER 14FT</h2>
+
+<p>Current City:
+<b id="current-city">
+Chennai
+</b></p>
+
+<label>
+Change Available City
+</label>
+
+<select id="new-city">
+<option>Chennai</option>
+<option>Coimbatore</option>
+<option>Bengaluru</option>
+<option>Hyderabad</option>
+<option>Kochi</option>
+</select>
+
+<button onclick="updateCity()">
+Update City
+</button>
+
+<button onclick="toggleTruck()">
+Mark Busy/Available
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let available = true;
+
+function updateCity(){
+
+  const city =
+    document.getElementById(
+      'new-city'
+    ).value;
+
+  document.getElementById(
+    'current-city'
+  ).innerText = city;
+
+  alert(
+    "Truck city updated to "
+    + city
+  );
+}
+
+function toggleTruck(){
+
+  available = !available;
+
+  alert(
+    available
+    ? "Truck Available"
+    : "Truck Busy"
+  );
+}
+
+function logout(){
+  window.location.href =
+  "index.html";
+}
+</script>
+
+</body>
+</html>
