@@ -1019,12 +1019,15 @@ function buildVehicleGrid() {
   grid.innerHTML = vehicles.map((v, i) => `
     <div class="vehicle-card ${i===0?'active':''}" onclick="selectVehicle(this, ${i})">
       <div class="v-icon">${v.icon}</div>
+
       <div>
         <div class="v-name">${v.name}</div>
         <div class="v-capacity">${v.capacity}</div>
       </div>
-      <ul class="v-features">${v.features.map(f=>`<li>${f}</li>`).join('')}</ul>
-      <div class="v-price">${v.price} <small>${v.perUnit}</small></div>
+
+      <ul class="v-features">
+        ${v.features.map(f => `<li>${f}</li>`).join('')}
+      </ul>
     </div>
   `).join('');
 }
