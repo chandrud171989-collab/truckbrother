@@ -835,24 +835,125 @@
 
 <script>
 const vehicles = [
-  { icon:'🚚', name:'ACE/DOST/PICKUP', capacity:'Up to 1.5 tonne', Min price:'₹1,800*', perUnit:'per trip', features:['GPS tracked','Verified driver','Open/closed body'], type:'Mini Truck' },
-  { icon:'🚛', name:'EICHER 14FT', capacity:'Up to 3.5 tonnes', Min price:'₹4,500*', perUnit:'per trip', features:['Tarpaulin cover','GPS','Insurance incl.'], type:'truck' },
-  { icon:'🚛', name:'EICHER 17FT', capacity:'Up to 5 tonnes',Min price:'₹6000*', perUnit:'per trip', features:['Closed body','Real-time tracking','24h support'], type:'truck' },
-  { icon:'🚛', name:'EICHER 19FT', capacity:'7 tonnes', features:['Sealed container','GPS','Insurance incl.'], type:'heavy' },
-  { icon:'🚛', name:'20FT Container', capacity:'6.5 tonnes', features:['Sealed container','GPS','Insurance incl.'], type:'heavy' },
-  { icon:'🚛', name:'EICHER PRO 22FT', capacity:'10 tonnes', features:['Sealed container','GPS','Insurance incl.'], type:'heavy' },
-  { icon:'🚛', name:'32FT CONTAINER', capacity:'7/8 tonnes', features:['Sealed container','GPS','Insurance incl.'], type:'heavy' },
-  { icon:'🚛', name:'32FT CONTAINER', capacity:'16 tonnes', features:['Sealed container','GPS','Insurance incl.'], type:'heavy' },
-  { icon:'🚛', name:'32FT CONTAINER', capacity:'18 tonnes', features:['Sealed container','GPS','Insurance incl.'], type:'heavy' },
-  { icon:'🚛', name:'LORRY/TAURUS', capacity:'18 tonnes', features:['Sealed container','GPS','Insurance incl.'], type:'heavy' },
-  { icon:'🚛', name:'LORRY/TAURUS', capacity:'18 tonnes', features:['Sealed container','GPS','Insurance incl.'], type:'heavy' },
-  { icon:'🚛', name:'20/32/40 FT ALL SIDE OPEN TRAILER', features:['AC','Entertainment system','Wide windows'], type:'van' },
-  { icon:'🚐', name:'Tourist Van', capacity:'17 seats', features:['Premium AC','Reclining seats','WiFi'], type:'van' },
-  { icon:'🚌', name:'Minibus(Coach)', capacity:'25 seats', features:['Premium AC','Reclining seats','WiFi'], type:'van' },
-  { icon:'🚐', name:'Tempo Traveller', capacity:'9 seats', features:['AC','Music system','Luggage rack'], type:'Van' },
-  { icon:'🚐', name:'Tempo Traveller XL', capacity:'12 seats', features:['AC','Push-back seats','GPS tracked'], type:'Van' },
-  { icon:'🚌', name:'Tourist Bus', capacity:' 50 seats', features:['Premium AC','Reclining seats','WiFi'], type:'bus' },
-  { icon:'🚌', name:'Tourist Bus (Sleeper)', capacity:' 35 seats', features:['Premium AC','Premium Sleeper','WiFi'], type:'bus' },
+  {
+    icon:'🚚',
+    name:'ACE / DOST / PICKUP',
+    capacity:'Up to 1.5 tonne',
+    features:['GPS tracked','Verified driver','Open/closed body'],
+    type:'truck'
+  },
+  {
+    icon:'🚛',
+    name:'EICHER 14FT',
+    capacity:'Up to 3.5 tonnes',
+    features:['Tarpaulin cover','GPS','Insurance incl.'],
+    type:'truck'
+  },
+  {
+    icon:'🚛',
+    name:'EICHER 17FT',
+    capacity:'Up to 5 tonnes',
+    features:['Closed body','Real-time tracking','24h support'],
+    type:'truck'
+  },
+  {
+    icon:'🚛',
+    name:'EICHER 19FT',
+    capacity:'7 tonnes',
+    features:['GPS','Heavy load','24h support'],
+    type:'heavy'
+  },
+  {
+    icon:'🚛',
+    name:'20FT CONTAINER',
+    capacity:'6.5 tonnes',
+    features:['Sealed container','GPS','Insurance incl.'],
+    type:'heavy'
+  },
+  {
+    icon:'🚛',
+    name:'EICHER PRO 22FT',
+    capacity:'10 tonnes',
+    features:['Heavy load','GPS','Insurance incl.'],
+    type:'heavy'
+  },
+  {
+    icon:'🚛',
+    name:'32FT CONTAINER',
+    capacity:'7/8 tonnes',
+    features:['Long distance','GPS','Insurance incl.'],
+    type:'heavy'
+  },
+  {
+    icon:'🚛',
+    name:'32FT CONTAINER',
+    capacity:'16 tonnes',
+    features:['Heavy load','GPS','Insurance incl.'],
+    type:'heavy'
+  },
+  {
+    icon:'🚛',
+    name:'32FT CONTAINER',
+    capacity:'18 tonnes',
+    features:['Heavy load','GPS','Insurance incl.'],
+    type:'heavy'
+  },
+  {
+    icon:'🚛',
+    name:'LORRY / TAURUS',
+    capacity:'18 tonnes',
+    features:['Long distance','GPS','Insurance incl.'],
+    type:'heavy'
+  },
+  {
+    icon:'🚛',
+    name:'20 / 32 / 40 FT ALL SIDE OPEN TRAILER',
+    capacity:'Heavy Load',
+    features:['Open trailer','GPS','Insurance incl.'],
+    type:'heavy'
+  },
+  {
+    icon:'🚐',
+    name:'Tourist Van',
+    capacity:'17 seats',
+    features:['Premium AC','Reclining seats','WiFi'],
+    type:'van'
+  },
+  {
+    icon:'🚌',
+    name:'Minibus (Coach)',
+    capacity:'25 seats',
+    features:['Premium AC','Comfort seats','WiFi'],
+    type:'van'
+  },
+  {
+    icon:'🚐',
+    name:'Tempo Traveller',
+    capacity:'9 seats',
+    features:['AC','Music system','Luggage rack'],
+    type:'tempo'
+  },
+  {
+    icon:'🚐',
+    name:'Tempo Traveller XL',
+    capacity:'12 seats',
+    features:['AC','Push-back seats','GPS tracked'],
+    type:'tempo'
+  },
+  {
+    icon:'🚌',
+    name:'Tourist Bus',
+    capacity:'50 seats',
+    features:['Premium AC','Reclining seats','WiFi'],
+    type:'bus'
+  },
+  {
+    icon:'🚌',
+    name:'Tourist Bus (Sleeper)',
+    capacity:'35 seats',
+    features:['Premium AC','Premium Sleeper','WiFi'],
+    type:'bus'
+  }
 ];
 
 
