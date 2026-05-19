@@ -639,7 +639,7 @@
           <label class="form-label">From</label>
           <div class="input-with-icon">
             <span class="input-icon">📍</span>
-            <input class="form-input" id="from-city" type="text" placeholder="Chennai, TN" autocomplete="off"/>
+            <input class="form-input"id="from-city"type="text"placeholder="Enter city"list="city-list"autocomplete="off"/>
           </div>
           <button class="swap-btn" onclick="swapCities()" title="Swap">⇄</button>
         </div>
@@ -647,7 +647,7 @@
           <label class="form-label">To</label>
           <div class="input-with-icon">
             <span class="input-icon">🏁</span>
-            <input class="form-input" id="to-city" type="text" placeholder="Bengaluru, KA" autocomplete="off"/>
+            <input class="form-input"id="to-city"type="text"placeholder="Enter city"list="city-list"autocomplete="off"/>
           </div>
         </div>
         <div class="form-group">
@@ -1167,5 +1167,39 @@ document.getElementById('travel-date').value = tomorrow.toISOString().split('T')
 
 buildVehicleGrid();
 </script>
+<datalist id="city-list">
+  <option value="Chennai">
+  <option value="Coimbatore">
+  <option value="Madurai">
+  <option value="Salem">
+  <option value="Tiruppur">
+  <option value="Erode">
+  <option value="Trichy">
+  <option value="Vellore">
+  <option value="Thoothukudi">
+  <option value="Nagercoil">
+
+  <option value="Bengaluru">
+  <option value="Mysuru">
+  <option value="Mangalore">
+  <option value="Hubli">
+
+  <option value="Kochi">
+  <option value="Trivandrum">
+  <option value="Kozhikode">
+  <option value="Thrissur">
+
+  <option value="Hyderabad">
+  <option value="Warangal">
+
+  <option value="Visakhapatnam">
+  <option value="Vijayawada">
+  <option value="Tirupati">
+
+  <option value="Mumbai">
+  <option value="Delhi">
+  <option value="Pune">
+  <option value="Kolkata">
+</datalist>
 </body>
 </html>
