@@ -588,7 +588,9 @@
     <li><a href="#">Track</a></li>
     <li><a href="#">Enterprise</a></li>
   </ul>
-  <button class="nav-cta">Login</button>
+  <button class="nav-cta" onclick="openLoginModal()">
+  Login / Register
+</button>
 </nav>
 
 <!-- HERO -->
@@ -842,7 +844,56 @@
     </div>
   </div>
 </div>
+<!-- LOGIN / REGISTER MODAL -->
+<div class="modal-overlay" id="login-modal">
+  <div class="modal">
 
+    <div class="modal-header">
+      <div class="modal-title">
+        Login / Register
+      </div>
+
+      <button class="modal-close"
+        onclick="closeLoginModal()">
+        ✕
+      </button>
+    </div>
+
+    <div style="display:flex;gap:20px;flex-wrap:wrap;">
+
+      <!-- Customer -->
+      <div class="vehicle-card"
+           style="flex:1;min-width:220px;cursor:pointer;">
+        <div class="v-icon">👤</div>
+        <div class="v-name">Customer</div>
+        <div class="v-capacity">
+          Book trucks, vans & buses
+        </div>
+
+        <button class="book-btn"
+          style="margin-top:20px;width:100%;">
+          Register as Customer
+        </button>
+      </div>
+
+      <!-- Truck Owner -->
+      <div class="vehicle-card"
+           style="flex:1;min-width:220px;cursor:pointer;">
+        <div class="v-icon">🚛</div>
+        <div class="v-name">Truck Owner</div>
+        <div class="v-capacity">
+          Register your vehicles
+        </div>
+
+        <button class="book-btn"
+          style="margin-top:20px;width:100%;">
+          Register as Owner
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
 <script>
 const vehicles = [
   {
@@ -1166,6 +1217,18 @@ tomorrow.setDate(tomorrow.getDate() + 1);
 document.getElementById('travel-date').value = tomorrow.toISOString().split('T')[0];
 
 buildVehicleGrid();
+
+function openLoginModal() {
+  document
+    .getElementById('login-modal')
+    .classList.add('open');
+}
+
+function closeLoginModal() {
+  document
+    .getElementById('login-modal')
+    .classList.remove('open');
+}
 </script>
 <datalist id="city-list">
   <option value="Chennai">
