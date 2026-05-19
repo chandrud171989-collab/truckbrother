@@ -909,8 +909,8 @@
           </button>
 
           <button class="book-btn"
-          onclick="openOwnerRegister()">
-            Customer Registration
+          onclick="openCustomerRegister()">
+            Registration
           </button>
         </div>
       </div>
@@ -923,7 +923,7 @@
         <div class="v-name">Truck Owner</div>
 
         <div class="v-capacity">
-          Register your vehicles
+          Register your vehicle
         </div>
 
         <div style="margin-top:20px;
@@ -935,8 +935,9 @@
             Login
           </button>
 
-          <button class="book-btn">
-            Register as Customer
+          <button class="book-btn"
+          onclick="openOwnerRegister()">
+            Register your vehicle
           </button>
         </div>
       </div>
@@ -945,6 +946,73 @@
   </div>
 </div>
 <script>
+let generatedOTP = "";
+
+// Open Customer Register
+function openCustomerRegister() {
+
+  closeLoginModal();
+
+  document
+    .getElementById('customer-modal')
+    .classList.add('open');
+}
+
+// Close Customer Register
+function closeCustomerRegister() {
+
+  document
+    .getElementById('customer-modal')
+    .classList.remove('open');
+}
+
+// Send OTP
+function sendOTP() {
+
+  const mobile =
+    document.getElementById(
+      'customer-mobile'
+    ).value;
+
+  if (mobile.length < 10) {
+    alert('Enter valid mobile number');
+    return;
+  }
+
+  generatedOTP =
+    Math.floor(
+      1000 + Math.random() * 9000
+    ).toString();
+
+  alert(
+    'Demo OTP: ' + generatedOTP
+  );
+}
+
+// Verify OTP
+function verifyOTP() {
+
+  const enteredOTP =
+    document.getElementById(
+      'otp-input'
+    ).value;
+
+  if (
+    enteredOTP === generatedOTP
+  ) {
+
+    alert(
+      'Registration Successful ✅'
+    );
+
+    closeCustomerRegister();
+
+  } else {
+
+    alert('Invalid OTP ❌');
+  }
+}
+  
 const vehicles = [
   {
     icon:'🚚',
@@ -1510,6 +1578,118 @@ function closeOwnerRegister() {
 
       <button class="modal-submit">
         Register Vehicle →
+      </button>
+
+    </div>
+  </div>
+</div>
+<!-- CUSTOMER REGISTER MODAL -->
+<div class="modal-overlay" id="customer-modal">
+
+  <div class="modal">
+
+    <div class="modal-header">
+      <div class="modal-title">
+        Customer Registration
+      </div>
+
+      <button class="modal-close"
+        onclick="closeCustomerRegister()">
+        ✕
+      </button>
+    </div>
+
+    <div class="modal-form">
+
+      <h3 style="color:orange;">
+        Basic Details
+      </h3>
+
+      <div class="modal-form-row">
+
+        <div class="form-group">
+          <label class="form-label">
+            Full Name
+          </label>
+
+          <input class="form-input"
+            type="text"
+            placeholder="Enter full name">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            Mobile Number
+          </label>
+
+          <input class="form-input"
+            id="customer-mobile"
+            type="tel"
+            placeholder="9876543210">
+        </div>
+
+      </div>
+
+      <div class="modal-form-row">
+
+        <div class="form-group">
+          <label class="form-label">
+            Email Address
+          </label>
+
+          <input class="form-input"
+            type="email"
+            placeholder="example@gmail.com">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            City
+          </label>
+
+          <input class="form-input"
+            type="text"
+            placeholder="Chennai">
+        </div>
+
+      </div>
+
+      <!-- OTP -->
+      <h3 style="color:orange;margin-top:20px;">
+        Mobile Verification
+      </h3>
+
+      <div class="modal-form-row">
+
+        <div class="form-group">
+          <label class="form-label">
+            Enter OTP
+          </label>
+
+          <input class="form-input"
+            id="otp-input"
+            type="text"
+            placeholder="Enter OTP">
+        </div>
+
+        <div class="form-group"
+          style="display:flex;
+          justify-content:flex-end;
+          align-items:end;">
+
+          <button class="book-btn"
+            type="button"
+            onclick="sendOTP()">
+            Send OTP
+          </button>
+
+        </div>
+
+      </div>
+
+      <button class="modal-submit"
+        onclick="verifyOTP()">
+        Register →
       </button>
 
     </div>
