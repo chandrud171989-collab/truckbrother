@@ -600,6 +600,62 @@
     .trust-bar { flex-direction: column; align-items: flex-start; }
     .results-section { padding-left: 24px; padding-right: 24px; }
   }
+  /* MOBILE RESPONSIVE */
+@media screen and (max-width: 768px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  .hero-search,
+  .search-container,
+  .booking-form,
+  .modal-form-row,
+  .login-grid {
+    flex-direction: column !important;
+  }
+
+  .vehicle-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .modal {
+    width: 95% !important;
+    padding: 20px !important;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .form-input,
+  .form-select,
+  button {
+    width: 100% !important;
+  }
+
+  .result-row {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 28px !important;
+  }
+
+  h2 {
+    font-size: 22px !important;
+  }
+
+  .vehicle-card {
+    width: 100% !important;
+  }
+}
 </style>
 </head>
 <body>
