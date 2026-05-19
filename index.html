@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>vandi.com — Commercial Vehicle Booking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --ink2: #141414;
+    --ink3: #1c1c1c;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #f0ede6;
+    --muted: #7a7670;
+    --amber: #f5a623;
+    --amber2: #e8920f;
+    --amber-dim: rgba(245,166,35,0.12);
+    --amber-dim2: rgba(245,166,35,0.07);
+    --red: #e84040;
+    --green: #3ecf8e;
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(13,13,13,0.85);
+    backdrop-filter: blur(16px);
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-size: 28px; font-weight: 900;
+    letter-spacing: 0.05em;
+    color: var(--text);
+  }
+  .logo span { color: var(--amber); }
+
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--amber); color: var(--ink);
+    border: none; padding: 10px 24px;
+    font-family: var(--font-display); font-size: 16px; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--amber2); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 120px 48px 60px;
+    overflow: hidden;
+  }
+
+  /* Diagonal grid lines background */
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(245,166,35,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,166,35,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* Big amber bar accent */
+  .hero-accent {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px; background: var(--amber);
+  }
+
+  .hero-tag {
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-tag::before {
+    content: ''; display: block;
+    width: 32px; height: 2px; background: var(--amber);
+  }
+
+  .hero-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(68px, 9vw, 120px);
+    font-weight: 900; line-height: 0.92;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero-h1 em {
+    font-style: normal; color: var(--amber);
+    display: block;
+  }
+
+  .hero-sub {
+    margin-top: 28px;
+    max-width: 480px;
+    color: var(--muted);
+    font-size: 16px; line-height: 1.7;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-stats {
+    display: flex; gap: 48px; margin-top: 48px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .stat-val {
+    font-family: var(--font-display);
+    font-size: 42px; font-weight: 800;
+    color: var(--text); line-height: 1;
+  }
+  .stat-val span { color: var(--amber); }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* ── BOOKING CARD ── */
+  .booking-wrapper {
+    position: relative; z-index: 10;
+    padding: 0 48px 80px;
+    animation: fadeUp 0.6s 0.35s ease both;
+  }
+
+  .booking-card {
+    background: var(--ink2);
+    border: 1px solid var(--border2);
+    border-top: 2px solid var(--amber);
+    padding: 0;
+    max-width: 1100px;
+  }
+
+  .booking-tabs {
+    display: flex; border-bottom: 1px solid var(--border);
+  }
+  .tab-btn {
+    padding: 18px 32px;
+    font-family: var(--font-display); font-size: 16px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); background: none; border: none;
+    cursor: pointer; transition: all 0.2s;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .tab-btn .tab-icon { font-size: 18px; }
+  .tab-btn.active { color: var(--amber); border-bottom-color: var(--amber); background: var(--amber-dim2); }
+  .tab-btn:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.03); }
+
+  .booking-body { padding: 36px; }
+
+  /* ── FORM GRID ── */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 200px 180px 160px;
+    gap: 16px;
+    align-items: end;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+
+  .form-label {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .form-input, .form-select {
+    width: 100%;
+    background: var(--ink3);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    padding: 14px 16px;
+    font-family: var(--font-body); font-size: 15px;
+    outline: none; transition: border-color 0.2s, background 0.2s;
+    appearance: none; border-radius: 0;
+  }
+  .form-input:focus, .form-select:focus {
+    border-color: var(--amber);
+    background: var(--amber-dim2);
+  }
+  .form-input::placeholder { color: var(--muted); }
+
+  .input-with-icon { position: relative; }
+  .input-with-icon .form-input { padding-left: 44px; }
+  .input-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--amber); font-size: 17px; pointer-events: none;
+  }
+
+  /* swap button */
+  .swap-btn {
+    position: absolute; right: -28px; top: 50%; transform: translateY(-50%);
+    width: 28px; height: 28px;
+    background: var(--ink3); border: 1px solid var(--border2);
+    color: var(--amber); cursor: pointer; z-index: 2;
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+    transition: background 0.2s;
+  }
+  .swap-btn:hover { background: var(--amber-dim); }
+  .route-group { position: relative; }
+
+  .search-btn {
+    width: 100%; background: var(--amber); color: var(--ink);
+    border: none; padding: 14px 24px;
+    font-family: var(--font-display); font-size: 18px; font-weight: 800;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .search-btn:hover { background: var(--amber2); transform: translateY(-2px); }
+  .search-btn:active { transform: translateY(0); }
+
+  /* ── VEHICLE TYPES ── */
+  .section { padding: 80px 48px; }
+  .section-header { margin-bottom: 48px; }
+  .section-tag {
+    font-family: var(--font-display); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 12px;
+  }
+  .section-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 60px); font-weight: 900;
+    letter-spacing: -0.01em; text-transform: uppercase; line-height: 0.95;
+  }
+  .section-h2 em { font-style: normal; color: var(--amber); }
+
+  .vehicles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 2px;
+  }
+
+  .vehicle-card {
+    background: var(--ink2);
+    border: 1px solid var(--border);
+    padding: 32px 28px;
+    cursor: pointer; position: relative; overflow: hidden;
+    transition: border-color 0.2s, background 0.2s;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .vehicle-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--amber);
+    transform: scaleY(0); transform-origin: bottom;
+    transition: transform 0.25s ease;
+  }
+  .vehicle-card:hover::before, .vehicle-card.active::before { transform: scaleY(1); }
+  .vehicle-card:hover, .vehicle-card.active {
+    border-color: var(--border2);
+    background: var(--ink3);
+  }
+  .vehicle-card.active { background: var(--amber-dim); border-color: var(--amber); }
+
+  .v-icon {
+    font-size: 40px; line-height: 1;
+    filter: grayscale(0.3);
+  }
+  .v-name {
+    font-family: var(--font-display); font-size: 22px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.03em;
+  }
+  .v-capacity {
+    font-size: 12px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  .v-price {
+    font-family: var(--font-display); font-size: 32px; font-weight: 700;
+    color: var(--amber); margin-top: auto;
+  }
+  .v-price small {
+    font-size: 14px; color: var(--muted); font-weight: 400;
+    font-family: var(--font-body);
+  }
+  .v-features { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .v-features li {
+    font-size: 13px; color: var(--muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .v-features li::before { content: '—'; color: var(--amber); font-size: 10px; }
+
+  /* ── RESULTS SECTION ── */
+  .results-section {
+    padding: 0 48px 80px;
+    display: none;
+  }
+  .results-section.visible { display: block; }
+
+  .results-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .results-count {
+    font-family: var(--font-display); font-size: 28px; font-weight: 800;
+    text-transform: uppercase;
+  }
+  .results-count span { color: var(--amber); }
+
+  .sort-select {
+    background: var(--ink2); border: 1px solid var(--border2);
+    color: var(--text); padding: 10px 16px;
+    font-family: var(--font-body); font-size: 13px;
+    outline: none; cursor: pointer; border-radius: 0; appearance: none;
+    padding-right: 32px;
+  }
+
+  .result-list { display: flex; flex-direction: column; gap: 2px; }
+
+  .result-row {
+    background: var(--ink2); border: 1px solid var(--border);
+    display: grid; grid-template-columns: 80px 1fr 1fr 1fr auto;
+    align-items: center; gap: 24px; padding: 24px 28px;
+    cursor: pointer; transition: border-color 0.2s, background 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .result-row::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    height: 2px; width: 0; background: var(--amber);
+    transition: width 0.3s ease;
+  }
+  .result-row:hover { border-color: var(--border2); background: var(--ink3); }
+  .result-row:hover::after { width: 100%; }
+
+  .result-rank {
+    font-family: var(--font-display); font-size: 42px; font-weight: 900;
+    color: rgba(245,166,35,0.15); line-height: 1; text-align: center;
+  }
+  .result-vehicle-name {
+    font-family: var(--font-display); font-size: 20px; font-weight: 800;
+    text-transform: uppercase;
+  }
+  .result-vehicle-meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  .result-route { font-size: 14px; color: var(--muted); }
+  .result-route strong { color: var(--text); font-weight: 500; font-size: 16px; }
+  .result-route .arrow { color: var(--amber); margin: 0 8px; }
+
+  .result-avail {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 5px 12px;
+  }
+  .result-avail.good { background: rgba(62,207,142,0.1); color: var(--green); }
+  .result-avail.low  { background: rgba(232,64,64,0.1); color: var(--red); }
+  .result-avail .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  .result-price-wrap { text-align: right; }
+  .result-price {
+    font-family: var(--font-display); font-size: 30px; font-weight: 800;
+    color: var(--amber);
+  }
+  .result-price-note { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .book-btn {
+    background: var(--amber); color: var(--ink);
+    border: none; padding: 12px 28px;
+    font-family: var(--font-display); font-size: 16px; font-weight: 800;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    cursor: pointer; white-space: nowrap;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .book-btn:hover { background: var(--amber2); transform: translateY(-2px); }
+
+  /* ── HOW IT WORKS ── */
+  .steps-section { padding: 80px 48px; border-top: 1px solid var(--border); }
+
+  .steps-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .step {
+    padding: 40px 36px;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .step:last-child { border-right: none; }
+
+  .step-num {
+    font-family: var(--font-display); font-size: 72px; font-weight: 900;
+    color: rgba(245,166,35,0.1); line-height: 1;
+    position: absolute; top: 24px; right: 24px;
+  }
+  .step-icon { font-size: 28px; margin-bottom: 20px; }
+  .step-title {
+    font-family: var(--font-display); font-size: 22px; font-weight: 800;
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .step-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  /* ── TRUST BAR ── */
+  .trust-bar {
+    background: var(--amber); padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 20px;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--font-display); font-size: 17px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink);
+  }
+  .trust-item .icon { font-size: 22px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink2); border-top: 1px solid var(--border);
+    padding: 60px 48px 32px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px; margin-bottom: 48px;
+  }
+  .footer-brand .logo { font-size: 32px; margin-bottom: 16px; display: block; }
+  .footer-brand p { color: var(--muted); font-size: 14px; max-width: 280px; line-height: 1.7; }
+  .footer-col h4 {
+    font-family: var(--font-display); font-size: 14px; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-col a { color: var(--muted); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--text); }
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-bottom p { color: var(--muted); font-size: 13px; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(6px);
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--ink2); border: 1px solid var(--border2);
+    border-top: 3px solid var(--amber);
+    width: 100%; max-width: 560px;
+    padding: 40px;
+    animation: slideUp 0.3s ease both;
+  }
+  .modal-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  .modal-title {
+    font-family: var(--font-display); font-size: 32px; font-weight: 900;
+    text-transform: uppercase; line-height: 1;
+  }
+  .modal-close {
+    background: none; border: 1px solid var(--border2); color: var(--muted);
+    width: 36px; height: 36px; cursor: pointer; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .modal-close:hover { border-color: var(--amber); color: var(--amber); }
+
+  .modal-summary {
+    background: var(--amber-dim); border: 1px solid rgba(245,166,35,0.2);
+    padding: 20px; margin-bottom: 28px;
+  }
+  .modal-summary-row {
+    display: flex; justify-content: space-between;
+    font-size: 14px; padding: 6px 0;
+    border-bottom: 1px solid rgba(245,166,35,0.1);
+  }
+  .modal-summary-row:last-child { border-bottom: none; }
+  .modal-summary-row .label { color: var(--muted); }
+  .modal-summary-row .val { color: var(--text); font-weight: 500; }
+  .modal-summary-row.total .val {
+    font-family: var(--font-display); font-size: 22px;
+    font-weight: 800; color: var(--amber);
+  }
+
+  .modal-form { display: flex; flex-direction: column; gap: 16px; }
+  .modal-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .modal-submit {
+    width: 100%; background: var(--amber); color: var(--ink);
+    border: none; padding: 16px;
+    font-family: var(--font-display); font-size: 20px; font-weight: 800;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; margin-top: 8px;
+    transition: background 0.2s;
+  }
+  .modal-submit:hover { background: var(--amber2); }
+
+  /* ── SUCCESS ── */
+  .success-view { display: none; text-align: center; padding: 20px 0; }
+  .success-view.visible { display: block; }
+  .success-icon { font-size: 56px; margin-bottom: 20px; }
+  .success-title {
+    font-family: var(--font-display); font-size: 36px; font-weight: 900;
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .success-ref {
+    font-family: var(--font-display); font-size: 22px; font-weight: 700;
+    color: var(--amber); margin-bottom: 8px;
+  }
+  .success-desc { color: var(--muted); font-size: 15px; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: var(--border); margin: 0 48px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero, .booking-wrapper, .section, .steps-section { padding-left: 24px; padding-right: 24px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .result-row { grid-template-columns: 1fr auto; }
+    .result-rank, .result-route, .result-avail { display: none; }
+    .trust-bar { flex-direction: column; align-items: flex-start; }
+    .results-section { padding-left: 24px; padding-right: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="logo">HAUL<span>X</span></span>
+  <ul class="nav-links">
+    <li><a href="#">Fleet</a></li>
+    <li><a href="#">Routes</a></li>
+    <li><a href="#">Operators</a></li>
+    <li><a href="#">Track</a></li>
+    <li><a href="#">Enterprise</a></li>
+  </ul>
+  <button class="nav-cta">Login</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-accent"></div>
+  <div class="hero-tag">India's Commercial Transport Platform</div>
+  <h1 class="hero-h1">
+    Move anything.<br>
+    <em>Anywhere.</em>
+  </h1>
+  <p class="hero-sub">Book trucks, buses, tempos, and heavy vehicles instantly. 4,200+ verified operators. Real-time tracking. Guaranteed on-time delivery.</p>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-val">4.2<span>K+</span></div>
+      <div class="stat-label">Operators</div>
+    </div>
+    <div>
+      <div class="stat-val">38<span>K</span></div>
+      <div class="stat-label">Trips / month</div>
+    </div>
+    <div>
+      <div class="stat-val">99<span>%</span></div>
+      <div class="stat-label">On-time rate</div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING CARD -->
+<div class="booking-wrapper">
+  <div class="booking-card">
+    <div class="booking-tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'passenger')">
+        <span class="tab-icon">🚌</span> Passenger Bus
+      </button>
+      <button class="tab-btn" onclick="switchTab(this,'goods')">
+        <span class="tab-icon">🚚</span> Goods Transport
+      </button>
+      <button class="tab-btn" onclick="switchTab(this,'container')">
+        <span class="tab-icon">🏗️</span> Container / Heavy
+      </button>
+      <button class="tab-btn" onclick="switchTab(this,'rental')">
+        <span class="tab-icon">🚐</span> Vehicle Rental
+      </button>
+    </div>
+    <div class="booking-body">
+      <div class="form-grid">
+        <div class="form-group route-group">
+          <label class="form-label">From</label>
+          <div class="input-with-icon">
+            <span class="input-icon">📍</span>
+            <input class="form-input" id="from-city" type="text" placeholder="Chennai, TN" autocomplete="off"/>
+          </div>
+          <button class="swap-btn" onclick="swapCities()" title="Swap">⇄</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">To</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🏁</span>
+            <input class="form-input" id="to-city" type="text" placeholder="Bengaluru, KA" autocomplete="off"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <div class="input-with-icon">
+            <span class="input-icon">📅</span>
+            <input class="form-input" id="travel-date" type="date"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Vehicle Type</label>
+          <select class="form-select" id="vehicle-type">
+            <option value="">All types</option>
+            <option>Mini Bus (12–20 seats)</option>
+            <option>Standard Bus (32 seats)</option>
+            <option>Sleeper Bus (36 berths)</option>
+            <option>Volvo AC Bus</option>
+            <option>Tempo Traveller</option>
+            <option>Mini Truck (1T)</option>
+            <option>Medium Truck (5T)</option>
+            <option>Heavy Truck (20T+)</option>
+          </select>
+        </div>
+        <button class="search-btn" onclick="searchVehicles()">Search →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="results-section" id="results-section">
+  <div class="results-header">
+    <div class="results-count"><span id="result-count">6</span> vehicles found</div>
+    <select class="sort-select">
+      <option>Sort: Lowest price</option>
+      <option>Sort: Departure time</option>
+      <option>Sort: Rating</option>
+      <option>Sort: Fastest</option>
+    </select>
+  </div>
+  <div class="result-list" id="result-list"></div>
+</div>
+
+<!-- VEHICLE TYPES -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-tag">Our Fleet</div>
+    <h2 class="section-h2">Every vehicle<br><em>you need</em></h2>
+  </div>
+  <div class="vehicles-grid" id="vehicles-grid">
+    <!-- Filled by JS -->
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item"><span class="icon">✅</span> All operators verified</div>
+  <div class="trust-item"><span class="icon">📡</span> Live GPS tracking</div>
+  <div class="trust-item"><span class="icon">💳</span> Secure payments</div>
+  <div class="trust-item"><span class="icon">🔁</span> Free cancellation up to 12h</div>
+  <div class="trust-item"><span class="icon">☎️</span> 24/7 support</div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="steps-section">
+  <div class="section-header">
+    <div class="section-tag">Process</div>
+    <h2 class="section-h2">Book in <em>4 steps</em></h2>
+  </div>
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-icon">🔍</div>
+      <div class="step-title">Search Route</div>
+      <div class="step-desc">Enter your origin, destination, date, and vehicle preference. See all available options instantly.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-icon">🚛</div>
+      <div class="step-title">Choose Vehicle</div>
+      <div class="step-desc">Compare prices, vehicle specs, operator ratings, and departure times side by side.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-icon">💳</div>
+      <div class="step-title">Pay Securely</div>
+      <div class="step-desc">UPI, cards, net banking, or BNPL. Instant confirmation and e-ticket on your phone.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-icon">📡</div>
+      <div class="step-title">Track Live</div>
+      <div class="step-desc">Real-time GPS tracking from pickup to delivery. Alerts at every milestone.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">HAUL<span>X</span></span>
+      <p>India's most trusted commercial vehicle booking platform. Connecting businesses with reliable transport operators since 2022.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Passenger Buses</a></li>
+        <li><a href="#">Goods Transport</a></li>
+        <li><a href="#">Container Trucks</a></li>
+        <li><a href="#">Vehicle Rental</a></li>
+        <li><a href="#">Corporate Shuttles</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Operator Login</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Track Booking</a></li>
+        <li><a href="#">Cancellations</a></li>
+        <li><a href="#">Refund Policy</a></li>
+        <li><a href="#">Help Centre</a></li>
+        <li><a href="#">+91 1800-HAULX</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 HaulX Technologies Pvt. Ltd. · CIN: U74999TN2022PTC000000</p>
+    <p>Privacy Policy · Terms · Cookie Policy</p>
+  </div>
+</footer>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <div id="modal-form-view">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="modal-title">Confirm Booking</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px" id="modal-subtitle"></div>
+        </div>
+        <button class="modal-close" onclick="closeModalDirect()">✕</button>
+      </div>
+      <div class="modal-summary" id="modal-summary"></div>
+      <div class="modal-form">
+        <div class="modal-form-row">
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input class="form-input" type="text" placeholder="Rajesh Kumar"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mobile Number</label>
+            <input class="form-input" type="tel" placeholder="+91 98765 43210"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email (for e-ticket)</label>
+          <input class="form-input" type="email" placeholder="rajesh@company.com"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Special Instructions (optional)</label>
+          <input class="form-input" type="text" placeholder="e.g. fragile goods, AC required"/>
+        </div>
+        <button class="modal-submit" onclick="confirmBooking()">Pay & Confirm Booking →</button>
+      </div>
+    </div>
+    <div class="success-view" id="success-view">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Booking Confirmed!</div>
+      <div class="success-ref" id="success-ref"></div>
+      <div class="success-desc">Your e-ticket has been sent to your email and mobile.<br>Track your vehicle live from the HaulX app.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const vehicles = [
+  { icon:'🚌', name:'Mini Bus', capacity:'12–20 seats', price:'₹4,200', perUnit:'per trip', features:['AC available','GPS tracked','Door-to-door'], type:'passenger' },
+  { icon:'🚍', name:'Standard Bus', capacity:'32 seats', price:'₹8,500', perUnit:'per trip', features:['Reclining seats','AC','Onboard WiFi'], type:'passenger' },
+  { icon:'🛏️', name:'Sleeper Bus', capacity:'36 berths', price:'₹12,000', perUnit:'per trip', features:['Lower & upper berths','Blankets','USB charging'], type:'passenger' },
+  { icon:'🚌', name:'Volvo AC Bus', capacity:'45 seats', price:'₹18,000', perUnit:'per trip', features:['Premium AC','Pushback seats','Entertainment'], type:'passenger' },
+  { icon:'🚐', name:'Tempo Traveller', capacity:'9–12 seats', price:'₹2,800', perUnit:'per trip', features:['AC','Music system','Luggage rack'], type:'passenger' },
+  { icon:'🚚', name:'Mini Truck', capacity:'Up to 1 tonne', price:'₹1,800', perUnit:'per trip', features:['GPS tracked','Verified driver','Open/closed body'], type:'goods' },
+  { icon:'🚛', name:'Medium Truck', capacity:'Up to 5 tonnes', price:'₹4,500', perUnit:'per trip', features:['Tarpaulin cover','GPS','Insurance incl.'], type:'goods' },
+  { icon:'🏗️', name:'Heavy Truck', capacity:'15–25 tonnes', price:'₹9,200', perUnit:'per trip', features:['Closed container','Real-time tracking','24h support'], type:'goods' },
+];
+
+const mockResults = [
+  { rank:'01', name:'Velmurugan Travels', meta:'Standard Bus · 32 seats · AC', dep:'06:30 AM', arr:'01:15 PM', dur:'6h 45m', avail:'good', availTxt:'24 seats left', price:'₹8,500', rating:'4.8' },
+  { rank:'02', name:'SKR Express', meta:'Volvo AC Bus · 45 seats', dep:'08:00 AM', arr:'02:30 PM', dur:'6h 30m', avail:'good', availTxt:'18 seats left', price:'₹14,200', rating:'4.9' },
+  { rank:'03', name:'Parveen Travels', meta:'Sleeper Bus · 36 berths', dep:'09:30 PM', arr:'04:45 AM', dur:'7h 15m', avail:'low', availTxt:'3 berths left', price:'₹11,000', rating:'4.6' },
+  { rank:'04', name:'National Transline', meta:'Mini Truck · Open body · 1T', dep:'07:00 AM', arr:'01:30 PM', dur:'6h 30m', avail:'good', availTxt:'Available', price:'₹2,100', rating:'4.7' },
+  { rank:'05', name:'Raja Cargo', meta:'Heavy Truck · Closed · 10T', dep:'06:00 AM', arr:'01:00 PM', dur:'7h 00m', avail:'good', availTxt:'Available', price:'₹8,800', rating:'4.5' },
+  { rank:'06', name:'Meridian Movers', meta:'Tempo Traveller · 12 seats · AC', dep:'10:00 AM', arr:'04:45 PM', dur:'6h 45m', avail:'good', availTxt:'10 seats left', price:'₹3,400', rating:'4.8' },
+];
+
+let activeVehicle = null;
+let selectedResult = null;
+
+function switchTab(btn, type) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function swapCities() {
+  const f = document.getElementById('from-city');
+  const t = document.getElementById('to-city');
+  [f.value, t.value] = [t.value, f.value];
+}
+
+function searchVehicles() {
+  const from = document.getElementById('from-city').value || 'Chennai';
+  const to   = document.getElementById('to-city').value   || 'Bengaluru';
+  const date = document.getElementById('travel-date').value;
+
+  const section = document.getElementById('results-section');
+  section.classList.add('visible');
+  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const list = document.getElementById('result-list');
+  list.innerHTML = mockResults.map((r, i) => `
+    <div class="result-row" onclick="openModal(${i})" style="animation: fadeUp 0.4s ${i*0.07}s ease both; opacity:0">
+      <div class="result-rank">${r.rank}</div>
+      <div>
+        <div class="result-vehicle-name">${r.name}</div>
+        <div class="result-vehicle-meta">${r.meta} · ⭐ ${r.rating}</div>
+      </div>
+      <div class="result-route">
+        <strong>${from}</strong><span class="arrow">→</span><strong>${to}</strong>
+        <div style="margin-top:6px">${r.dep} → ${r.arr} &nbsp;·&nbsp; ${r.dur}</div>
+      </div>
+      <div><span class="result-avail ${r.avail}"><span class="dot"></span>${r.availTxt}</span></div>
+      <div style="display:flex;align-items:center;gap:20px">
+        <div class="result-price-wrap">
+          <div class="result-price">${r.price}</div>
+          <div class="result-price-note">per trip</div>
+        </div>
+        <button class="book-btn" onclick="event.stopPropagation();openModal(${i})">Book →</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function buildVehicleGrid() {
+  const grid = document.getElementById('vehicles-grid');
+  grid.innerHTML = vehicles.map((v, i) => `
+    <div class="vehicle-card ${i===0?'active':''}" onclick="selectVehicle(this, ${i})">
+      <div class="v-icon">${v.icon}</div>
+      <div>
+        <div class="v-name">${v.name}</div>
+        <div class="v-capacity">${v.capacity}</div>
+      </div>
+      <ul class="v-features">${v.features.map(f=>`<li>${f}</li>`).join('')}</ul>
+      <div class="v-price">${v.price} <small>${v.perUnit}</small></div>
+    </div>
+  `).join('');
+}
+
+function selectVehicle(el, i) {
+  document.querySelectorAll('.vehicle-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  activeVehicle = vehicles[i];
+}
+
+function openModal(idx) {
+  selectedResult = mockResults[idx];
+  const from = document.getElementById('from-city').value || 'Chennai';
+  const to   = document.getElementById('to-city').value   || 'Bengaluru';
+
+  document.getElementById('modal-title').textContent = 'Confirm Booking';
+  document.getElementById('modal-subtitle').textContent = selectedResult.name + ' · ' + selectedResult.meta;
+
+  document.getElementById('modal-summary').innerHTML = `
+    <div class="modal-summary-row"><span class="label">Route</span><span class="val">${from} → ${to}</span></div>
+    <div class="modal-summary-row"><span class="label">Departure</span><span class="val">${selectedResult.dep}</span></div>
+    <div class="modal-summary-row"><span class="label">Arrival</span><span class="val">${selectedResult.arr} (${selectedResult.dur})</span></div>
+    <div class="modal-summary-row"><span class="label">Operator</span><span class="val">${selectedResult.name} ⭐ ${selectedResult.rating}</span></div>
+    <div class="modal-summary-row total"><span class="label">Total</span><span class="val">${selectedResult.price}</span></div>
+  `;
+
+  document.getElementById('modal-form-view').style.display = 'block';
+  document.getElementById('success-view').classList.remove('visible');
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+function confirmBooking() {
+  const ref = 'HX' + Date.now().toString().slice(-8).toUpperCase();
+  document.getElementById('modal-form-view').style.display = 'none';
+  document.getElementById('success-view').classList.add('visible');
+  document.getElementById('success-ref').textContent = 'Booking ID: ' + ref;
+}
+
+// Set default date to tomorrow
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+document.getElementById('travel-date').value = tomorrow.toISOString().split('T')[0];
+
+buildVehicleGrid();
+</script>
+</body>
+</html>
