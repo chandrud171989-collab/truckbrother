@@ -483,36 +483,42 @@
   .modal-overlay.open { display: flex; }
 
   .modal {
-    background: var(--ink2); border: 1px solid var(--border2);
-    border-top: 3px solid var(--amber);
-    width: 100%; max-width: 560px;
-    padding: 40px;
-    animation: slideUp 0.3s ease both;
-  }
+  background: var(--ink2);
+  border: 1px solid var(--border2);
+  border-top: 3px solid var(--amber);
+  width: 90%;
+  max-width: 700px;
+  padding: 25px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
   .modal-header {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    margin-bottom: 32px;
-  
-  .login-close-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 45px;
-    height: 45px;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: #141414;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 9999;
-    transition: 0.3s;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.login-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 45px;
+  height: 45px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: #141414;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 9999;
+  transition: 0.3s;
 }
 
 .login-close-btn:hover {
   background: #f5a623;
   color: black;
-}  
   }
+
   .modal-title {
     font-family: var(--font-display); font-size: 32px; font-weight: 900;
     text-transform: uppercase; line-height: 1;
@@ -866,6 +872,7 @@
 </div>
 <!-- LOGIN / REGISTER MODAL -->
 <div class="modal-overlay" id="login-modal">
+
   <div class="modal">
 
     <div class="modal-header">
@@ -879,49 +886,58 @@
       </button>
     </div>
 
-    <div style="display:flex;gap:20px;flex-wrap:wrap;">
+    <div style="display:flex;gap:15px;flex-wrap:wrap;">
 
       <!-- Customer -->
       <div class="vehicle-card"
-           style="flex:1;min-width:220px;cursor:pointer;">
+        style="flex:1;min-width:220px;cursor:pointer;">
+
         <div class="v-icon">👤</div>
         <div class="v-name">Customer</div>
+
         <div class="v-capacity">
           Book trucks, vans & buses
         </div>
 
-        <div style="margin-top:20px;display:flex;flex-direction:column;gap:12px;">
-  
-      <button class="book-btn" style="width:100%;">
-        Login
-      </button>
+        <div style="margin-top:20px;
+          display:flex;
+          flex-direction:column;
+          gap:12px;">
 
-      <button class="book-btn" style="width:100%;">
-        Register as Customer
-      </button>
+          <button class="book-btn">
+            Login
+          </button>
 
-    </div>
+          <button class="book-btn">
+            Register as Customer
+          </button>
+        </div>
+      </div>
 
       <!-- Truck Owner -->
       <div class="vehicle-card"
-           style="flex:1;min-width:220px;cursor:pointer;">
+        style="flex:1;min-width:220px;cursor:pointer;">
+
         <div class="v-icon">🚛</div>
         <div class="v-name">Truck Owner</div>
+
         <div class="v-capacity">
           Register your vehicles
         </div>
 
-        <div style="margin-top:20px;display:flex;flex-direction:column;gap:12px;">
+        <div style="margin-top:20px;
+          display:flex;
+          flex-direction:column;
+          gap:12px;">
 
-      <button class="book-btn" style="width:100%;">
-        Login
-      </button>
+          <button class="book-btn">
+            Login
+          </button>
 
-      <button class="book-btn" style="width:100%;">
-        Register as Owner
-      </button>
-
-    </div>
+          <button class="book-btn">
+            Register as Owner
+          </button>
+        </div>
       </div>
 
     </div>
@@ -1262,6 +1278,15 @@ function closeLoginModal() {
     .getElementById('login-modal')
     .classList.remove('open');
 }
+
+document
+.getElementById('login-modal')
+.addEventListener('click', function(e){
+
+  if(e.target === this){
+    closeLoginModal();
+  }
+});
 </script>
 <datalist id="city-list">
   <option value="Chennai">
