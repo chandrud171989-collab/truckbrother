@@ -908,8 +908,9 @@
             Login
           </button>
 
-          <button class="book-btn">
-            Register as Customer
+          <button class="book-btn"
+          onclick="openOwnerRegister()">
+            Register as Owner
           </button>
         </div>
       </div>
@@ -1287,6 +1288,21 @@ document
     closeLoginModal();
   }
 });
+
+function openOwnerRegister() {
+
+  closeLoginModal();
+
+  document
+    .getElementById('owner-modal')
+    .classList.add('open');
+}
+
+function closeOwnerRegister() {
+  document
+    .getElementById('owner-modal')
+    .classList.remove('open');
+}
 </script>
 <datalist id="city-list">
   <option value="Chennai">
@@ -1322,5 +1338,182 @@ document
   <option value="Pune">
   <option value="Kolkata">
 </datalist>
+
+<!-- OWNER REGISTER MODAL -->
+<div class="modal-overlay" id="owner-modal">
+
+  <div class="modal">
+
+    <div class="modal-header">
+      <div class="modal-title">
+        Truck Owner Registration
+      </div>
+
+      <button class="modal-close"
+        onclick="closeOwnerRegister()">
+        ✕
+      </button>
+    </div>
+
+    <div class="modal-form">
+
+      <h3 style="color:orange;">
+        Owner Basic Details
+      </h3>
+
+      <div class="modal-form-row">
+        <div class="form-group">
+          <label class="form-label">
+            Owner Name
+          </label>
+          <input class="form-input"
+            type="text"
+            placeholder="Enter owner name">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            Mobile Number
+          </label>
+          <input class="form-input"
+            type="tel"
+            placeholder="9876543210">
+        </div>
+      </div>
+
+      <div class="modal-form-row">
+        <div class="form-group">
+          <label class="form-label">
+            Email
+          </label>
+          <input class="form-input"
+            type="email"
+            placeholder="example@gmail.com">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            Aadhaar Number
+          </label>
+          <input class="form-input"
+            type="text"
+            placeholder="XXXX XXXX XXXX">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          Address
+        </label>
+        <input class="form-input"
+          type="text"
+          placeholder="Enter address">
+      </div>
+
+      <h3 style="color:orange;margin-top:20px;">
+        Vehicle Details
+      </h3>
+
+      <div class="modal-form-row">
+        <div class="form-group">
+          <label class="form-label">
+            Vehicle Type
+          </label>
+
+          <select class="form-select">
+            <option>ACE / DOST / PICKUP</option>
+            <option>EICHER 14FT</option>
+            <option>EICHER 17FT</option>
+            <option>EICHER 19FT</option>
+            <option>20FT CONTAINER</option>
+            <option>32FT CONTAINER</option>
+            <option>LORRY / TAURUS</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            Vehicle Number
+          </label>
+
+          <input class="form-input"
+            type="text"
+            placeholder="TN01AB1234">
+        </div>
+      </div>
+
+      <div class="modal-form-row">
+        <div class="form-group">
+          <label class="form-label">
+            Capacity
+          </label>
+
+          <input class="form-input"
+            type="text"
+            placeholder="5 Ton">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            RC Number
+          </label>
+
+          <input class="form-input"
+            type="text"
+            placeholder="Enter RC Number">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          Operating City
+        </label>
+
+        <input class="form-input"
+          type="text"
+          placeholder="Chennai">
+      </div>
+
+      <h3 style="color:orange;margin-top:20px;">
+        Upload Documents
+      </h3>
+
+      <div class="form-group">
+        <label class="form-label">
+          Vehicle Photo
+        </label>
+
+        <input class="form-input"
+          type="file"
+          accept="image/*">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          Vehicle Legal Document
+        </label>
+
+        <input class="form-input"
+          type="file"
+          accept=".pdf,.jpg,.jpeg,.png">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          Driver License
+        </label>
+
+        <input class="form-input"
+          type="file"
+          accept=".pdf,.jpg,.jpeg,.png">
+      </div>
+
+      <button class="modal-submit">
+        Register Vehicle →
+      </button>
+
+    </div>
+  </div>
+</div>
 </body>
 </html>
