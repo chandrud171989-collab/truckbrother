@@ -969,12 +969,46 @@ const vehicles = [
 
 
 const mockResults = [
-  { rank:'01', name:'Murugan Tempo Service', meta:'Tempo Traveller · 12 seats · AC', dep:'06:00 AM', arr:'12:30 PM', dur:'6h 30m', avail:'good', availTxt:'Available', price:'₹2,800', rating:'4.8' },
-  { rank:'02', name:'Sri Balaji Tours', meta:'Tourist Van · 17 seats · AC', dep:'07:30 AM', arr:'02:00 PM', dur:'6h 30m', avail:'good', availTxt:'Available', price:'₹4,200', rating:'4.9' },
-  { rank:'03', name:'Karthik Luxury Vans', meta:'Luxury Tourist Van · 17 seats · WiFi', dep:'08:00 AM', arr:'02:45 PM', dur:'6h 45m', avail:'low', availTxt:'1 van left', price:'₹4,800', rating:'4.7' },
-  { rank:'04', name:'National Transline', meta:'Mini Truck · Open body · 1T', dep:'07:00 AM', arr:'01:30 PM', dur:'6h 30m', avail:'good', availTxt:'Available', price:'₹2,100', rating:'4.7' },
-  { rank:'05', name:'Raja Cargo', meta:'Heavy Truck · Closed body · 10T', dep:'06:00 AM', arr:'01:00 PM', dur:'7h 00m', avail:'good', availTxt:'Available', price:'₹7,500', rating:'4.5' },
-  { rank:'06', name:'Chennai Container Co.', meta:'Container Truck · 20T', dep:'05:30 AM', arr:'01:00 PM', dur:'7h 30m', avail:'good', availTxt:'Available', price:'₹12,000', rating:'4.6' },
+const mockResults = [
+
+  {
+    rank:'01',
+    name:'Murugan Tempo Service',
+    fromCity:'chennai',
+    meta:'Tempo Traveller · 12 seats · AC',
+    dep:'06:00 AM',
+    arr:'12:30 PM',
+    dur:'6h 30m',
+    avail:'good',
+    availTxt:'Available',
+    rating:'4.8'
+  },
+
+  {
+    rank:'02',
+    name:'Sri Balaji Tours',
+    fromCity:'coimbatore',
+    meta:'Tourist Van · 17 seats · AC',
+    dep:'07:30 AM',
+    arr:'02:00 PM',
+    dur:'6h 30m',
+    avail:'good',
+    availTxt:'Available',
+    rating:'4.9'
+  },
+
+  {
+    rank:'03',
+    name:'Karthik Luxury Vans',
+    fromCity:'bengaluru',
+    meta:'Luxury Tourist Van · 17 seats · WiFi',
+    dep:'08:00 AM',
+    arr:'02:45 PM',
+    dur:'6h 45m',
+    avail:'low',
+    availTxt:'1 van left',
+    rating:'4.7'
+  }
 ];
 
 let activeVehicle = null;
@@ -992,33 +1026,67 @@ function swapCities() {
 }
 
 function searchVehicles() {
-  const from = document.getElementById('from-city').value || 'Chennai';
-  const to   = document.getElementById('to-city').value   || 'Bengaluru';
-  const date = document.getElementById('travel-date').value;
+
+  const fromCity = document
+    .getElementById('from-city')
+    .value
+    .toLowerCase()
+    .trim();
 
   const section = document.getElementById('results-section');
   section.classList.add('visible');
-  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  section.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
 
   const list = document.getElementById('result-list');
-  list.innerHTML = mockResults.map((r, i) => `
-    <div class="result-row" onclick="openModal(${i})" style="animation: fadeUp 0.4s ${i*0.07}s ease both; opacity:0">
-      <div class="result-rank">${r.rank}</div>
+
+  // Filter vehicles based on From city
+  const filteredVehicles = vehicles.filter(vehicle =>
+    !vehicle.fromCity ||
+    vehicle.fromCity.toLowerCase() === fromCity
+  );
+
+  // No vehicles found
+  if (filteredVehicles.length === 0) {
+    list.innerHTML = `
+      <div style="padding:20px;color:orange;font-size:20px;">
+        No vehicles available in ${fromCity}
+      </div>
+    `;
+    return;
+  }
+
+  // Show filtered vehicles
+  list.innerHTML = filteredVehicles.map((v, i) => `
+    <div class="result-row">
+      <div class="result-rank">${i + 1}</div>
+
       <div>
-        <div class="result-vehicle-name">${r.name}</div>
-        <div class="result-vehicle-meta">${r.meta} · ⭐ ${r.rating}</div>
-      </div>
-      <div class="result-route">
-        <strong>${from}</strong><span class="arrow">→</span><strong>${to}</strong>
-        <div style="margin-top:6px">${r.dep} → ${r.arr} &nbsp;·&nbsp; ${r.dur}</div>
-      </div>
-      <div><span class="result-avail ${r.avail}"><span class="dot"></span>${r.availTxt}</span></div>
-      <div style="display:flex;align-items:center;gap:20px">
-        <div class="result-price-wrap">
-          <div class="result-price">${r.price}</div>
-          <div class="result-price-note">per trip</div>
+        <div class="result-vehicle-name">
+          ${v.icon} ${v.name}
         </div>
-        <button class="book-btn" onclick="event.stopPropagation();openModal(${i})">Book →</button>
+        <div class="result-vehicle-meta">
+          ${v.capacity}
+        </div>
+      </div>
+
+      <div class="result-route">
+        <strong>${fromCity}</strong>
+      </div>
+
+      <div>
+        <span class="result-avail good">
+          <span class="dot"></span>
+          Available
+        </span>
+      </div>
+
+      <div>
+        <button class="book-btn">
+          Book →
+        </button>
       </div>
     </div>
   `).join('');
