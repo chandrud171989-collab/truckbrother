@@ -966,11 +966,7 @@ const vehicles = [
   }
 ];
 
-
-
 const mockResults = [
-const mockResults = [
-
   {
     rank:'01',
     name:'Murugan Tempo Service',
@@ -1027,11 +1023,13 @@ function swapCities() {
 
 function searchVehicles() {
 
-  const fromCity = document
+  const from = document
     .getElementById('from-city')
     .value
     .toLowerCase()
-    .trim();
+    .trim() || 'chennai';
+
+  const to = document.getElementById('to-city').value || 'Bengaluru';
 
   const section = document.getElementById('results-section');
   section.classList.add('visible');
@@ -1040,46 +1038,58 @@ function searchVehicles() {
     block: 'start'
   });
 
-  const list = document.getElementById('result-list');
-
-  // Filter vehicles based on From city
-  const filteredVehicles = vehicles.filter(vehicle =>
-    !vehicle.fromCity ||
-    vehicle.fromCity.toLowerCase() === fromCity
+  const filteredResults = mockResults.filter(r =>
+    r.fromCity.toLowerCase() === from
   );
 
+  const list = document.getElementById('result-list');
+
   // No vehicles found
-  if (filteredVehicles.length === 0) {
+  if (filteredResults.length === 0) {
     list.innerHTML = `
-      <div style="padding:20px;color:orange;font-size:20px;">
-        No vehicles available in ${fromCity}
+      <div style="
+        padding:20px;
+        color:orange;
+        font-size:22px;
+        text-align:center;">
+        No vehicles available in ${from}
       </div>
     `;
     return;
   }
 
-  // Show filtered vehicles
-  list.innerHTML = filteredVehicles.map((v, i) => `
-    <div class="result-row">
-      <div class="result-rank">${i + 1}</div>
+  list.innerHTML = filteredResults.map((r, i) => `
+    <div class="result-row"
+      onclick="openModal(${i})"
+      style="animation: fadeUp 0.4s ${i*0.07}s ease both; opacity:0">
+
+      <div class="result-rank">${r.rank}</div>
 
       <div>
         <div class="result-vehicle-name">
-          ${v.icon} ${v.name}
+          ${r.name}
         </div>
         <div class="result-vehicle-meta">
-          ${v.capacity}
+          ${r.meta} · ⭐ ${r.rating}
         </div>
       </div>
 
       <div class="result-route">
-        <strong>${fromCity}</strong>
+        <strong>${from}</strong>
+        <span class="arrow">→</span>
+        <strong>${to}</strong>
+
+        <div style="margin-top:6px">
+          ${r.dep} → ${r.arr}
+          &nbsp;·&nbsp;
+          ${r.dur}
+        </div>
       </div>
 
       <div>
-        <span class="result-avail good">
+        <span class="result-avail ${r.avail}">
           <span class="dot"></span>
-          Available
+          ${r.availTxt}
         </span>
       </div>
 
@@ -1091,7 +1101,6 @@ function searchVehicles() {
     </div>
   `).join('');
 }
-
 function buildVehicleGrid() {
   const grid = document.getElementById('vehicles-grid');
   grid.innerHTML = vehicles.map((v, i) => `
