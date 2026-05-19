@@ -492,6 +492,26 @@
   .modal-header {
     display: flex; align-items: flex-start; justify-content: space-between;
     margin-bottom: 32px;
+  
+  .login-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: #141414;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 9999;
+    transition: 0.3s;
+}
+
+.login-close-btn:hover {
+  background: #f5a623;
+  color: black;
+}  
   }
   .modal-title {
     font-family: var(--font-display); font-size: 32px; font-weight: 900;
